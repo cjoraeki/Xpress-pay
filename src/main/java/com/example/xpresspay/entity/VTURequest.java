@@ -1,6 +1,5 @@
 package com.example.xpresspay.entity;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,12 +11,11 @@ import lombok.*;
 @Entity
 @Builder
 @ToString
-public class Customer {
+public class VTURequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String firstname;
-    private String lastname;
-    private String email;
-    private String password;
+    private Long requestId;
+    private String uniqueCode;
+    @OneToOne
+    private Airtime details;
 }
