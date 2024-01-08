@@ -15,6 +15,6 @@ public class Airtime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String phoneNumber;
+    private String phoneNumber; //Testing phone number = 08033333333
     private int amount;
 }

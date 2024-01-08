@@ -1,6 +1,7 @@
 package com.example.xpresspay.utils;
 
-import com.example.xpresspay.controller.CustomerController;
+import com.example.xpresspay.controller.UserController;
+import com.example.xpresspay.entity.User;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -24,7 +25,7 @@ import java.util.function.Function;
 @NoArgsConstructor
 @Slf4j
 public class JWTUtils {
-    Logger logger = Logger.getLogger(String.valueOf(CustomerController.class));
+    Logger logger = Logger.getLogger(String.valueOf(UserController.class));
 //    Logger logger = Logger.getLogger(String.valueOf(AirtimeController.class));
     private static final String JWT_SECRET = Dotenv.load().get("JWT_SECRET");
 
@@ -83,12 +84,12 @@ public class JWTUtils {
 
     private String createToken(Map<String, Object> claims,  User user) {
 //         claims = Jwts.claims().setSubject(authenticationContext.getUsername());
-        claims.put("role", user.getRole());
-        log.info("User role -> {}", user.getRole());
+//        claims.put("role", user.getRole());
+//        log.info("User role -> {}", user.getRole());
         log.info(JWT_SECRET);
         var jwts = Jwts.builder()
                 .setClaims(claims)
-                .setSubject(user.getUsername())
+                .setSubject(user.getEmail())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(5)))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
