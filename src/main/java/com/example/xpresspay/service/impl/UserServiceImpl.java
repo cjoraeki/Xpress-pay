@@ -68,7 +68,6 @@ public class UserServiceImpl implements UserService {
         try {
             return jwtAuthFilter.doFilter(request, response) == HttpServletResponse.SC_ACCEPTED;
         } catch (RuntimeException e) {
-            // Log or handle the exception if needed
             return false;
         }
     }

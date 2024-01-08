@@ -30,31 +30,23 @@ class AirtimeServiceImplTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        // Set private fields using ReflectionTestUtils
-        ReflectionTestUtils.setField(airtimeService, "PUBLIC_KEY", "your-public-key");
-        ReflectionTestUtils.setField(airtimeService, "PRIVATE_KEY", "your-private-key");
-        ReflectionTestUtils.setField(airtimeService, "apiUrl", "your-api-url");
+        ReflectionTestUtils.setField(airtimeService, "PUBLIC_KEY", "1234567890");
+        ReflectionTestUtils.setField(airtimeService, "PRIVATE_KEY", "0987654321");
+        ReflectionTestUtils.setField(airtimeService, "apiUrl", "http://localhost:8080");
     }
 
     @Test
     void topUpAirtime() throws JsonProcessingException {
-        // Given
+
         AirtimeRequestDto airtimeRequestDto = new AirtimeRequestDto();
-        // Set other properties of airtimeRequestDto
-
-        // Mock the response
         AirtimeResponseDto mockResponse = new AirtimeResponseDto();
-        // Set properties of mockResponse
 
-        // Mock the restTemplate.exchange method
         ResponseEntity<AirtimeResponseDto> responseEntity = new ResponseEntity<>(mockResponse, HttpStatus.OK);
         when(restTemplate.exchange(any(String.class), any(HttpMethod.class), any(HttpEntity.class), any(Class.class)))
                 .thenReturn(responseEntity);
 
-        // When
         AirtimeResponseDto result = airtimeService.topUpAirtime(airtimeRequestDto);
 
-        // Then
         assertEquals(mockResponse, result);
     }
 }

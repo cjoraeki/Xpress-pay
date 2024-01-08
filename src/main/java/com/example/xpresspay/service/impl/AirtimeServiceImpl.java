@@ -28,6 +28,8 @@ import org.apache.commons.codec.binary.Hex;
 @Slf4j
 public class AirtimeServiceImpl implements AirtimeService {
 
+    private final RestTemplate restTemplate;
+
     @Value("${spring.xpress.payments.api.public-key}")
     private String PUBLIC_KEY;
 
@@ -39,7 +41,7 @@ public class AirtimeServiceImpl implements AirtimeService {
 
     @Override
     public AirtimeResponseDto topUpAirtime(AirtimeRequestDto airtimeRequestDto) throws JsonProcessingException {
-        System.out.println(airtimeRequestDto);
+
         Airtime airtime = new Airtime();
         airtime.setPhoneNumber(airtimeRequestDto.getPhoneNumber());
         airtime.setAmount(airtimeRequestDto.getAmount());
@@ -56,7 +58,6 @@ public class AirtimeServiceImpl implements AirtimeService {
 
         String generatedHMAC = calculateHMAC512(data, privateKey);
 
-        // Request headers
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + PUBLIC_KEY);
         headers.set("PaymentHash", generatedHMAC);
@@ -65,13 +66,8 @@ public class AirtimeServiceImpl implements AirtimeService {
 
         log.info("Generated HMAC: " + generatedHMAC);
 
-        // Create the HTTP entity
         HttpEntity<VTURequest> entity = new HttpEntity<>(vtuRequest, headers);
 
-        // Create RestTemplate
-        RestTemplate restTemplate = new RestTemplate();
-
-        // Make the API call
         ResponseEntity<AirtimeResponseDto> response = restTemplate.exchange(apiUrl, HttpMethod.POST, entity, AirtimeResponseDto.class);
 
         return response.getBody();
@@ -105,4 +101,3 @@ public class AirtimeServiceImpl implements AirtimeService {
     }
 
 }
-
