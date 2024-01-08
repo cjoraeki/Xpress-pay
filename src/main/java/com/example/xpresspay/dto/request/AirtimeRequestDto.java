@@ -8,4 +8,6 @@ import lombok.Setter;
 public class AirtimeRequestDto {
     private String phoneNumber; //Testing phone number = 08033333333
     private int amount;
+    private String requestId;
+
 }

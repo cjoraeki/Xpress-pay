@@ -40,7 +40,6 @@ public class UserController {
             String greetingMessage = userService.hello(greet, request, response);
             return ResponseEntity.ok(greetingMessage);
         } catch (RuntimeException e) {
-            // Log the exception if needed
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error handling JWT");
         }
     }

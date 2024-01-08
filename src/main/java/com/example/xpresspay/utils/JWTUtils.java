@@ -26,7 +26,7 @@ import java.util.function.Function;
 @Slf4j
 public class JWTUtils {
     Logger logger = Logger.getLogger(String.valueOf(UserController.class));
-//    Logger logger = Logger.getLogger(String.valueOf(AirtimeController.class));
+
     private static final String JWT_SECRET = Dotenv.load().get("JWT_SECRET");
 
     public String extractUsername(String token){

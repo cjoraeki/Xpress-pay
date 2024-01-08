@@ -6,9 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
 
 @Component
 @RequiredArgsConstructor
@@ -30,17 +28,10 @@ public class JWTAuthFilter {
 
                 if (jwtUtils.isTokenExpired(jwtToken)) {
                     String email = jwtUtils.extractUsername(jwtToken);
-//                    String role = jwtUtils.extractRoleClaim(jwtToken);
 
                     log.info("Setting authentication context for email -> {}", email);
                     authenticationContext.setEmail(email);
-//                    log.info("Authentication context set for user role -> {}", role);
-//                    authenticationContext.setRole(Role.valueOf(role));
                     authenticationContext.setAuthenticate(true);
-//                    if (!"ADMIN".equals(role)) {
-//                        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied. User is not an admin.");
-//                    }
-//                    doFilter(request, response);
                     return HttpServletResponse.SC_ACCEPTED;
                 }
 
